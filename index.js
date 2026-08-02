@@ -395,6 +395,22 @@ function createBot() {
       isReconnecting = false;
 
       console.log(`[Bot] [+] Successfully spawned on server!`);
+      setTimeout(() => {
+  bot.chat('/skin url https://minesk.in/12c15a0a456347d68c90705cd80be70c classic');
+}, 8000);
+      if (config.discord && config.discord.events.connect) {
+        sendDiscordWebhook(`[+] **Connected** to \`${config.server.ip}\``, 0x4ade80); // Green
+      }
+
+      const mcData = require('minecraft-data')(config.server.version);
+      const defaultMove = new Movements(bot, mcData);
+      defaultMove.allowFreeMotion = false;
+      defaultMove.canDig = false;
+      defaultMove.liquidCost = 1000;
+      defaultMove.fallDamageCost = 1000;
+
+      // Start all modules
+      initializeModules(bot, mcData, defaultMove);
       if (config.discord && config.discord.events.connect) {
         sendDiscordWebhook(`[+] **Connected** to \`${config.server.ip}\``, 0x4ade80); // Green
       }
